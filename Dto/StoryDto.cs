@@ -8,5 +8,6 @@
 		public string Author { get; set; }
 		public string Summary { get; set; }
 		public string Category { get; set; }
+		public int numOfChapter { get; set; }
 	}
 }
