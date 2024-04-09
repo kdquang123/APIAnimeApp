@@ -16,7 +16,7 @@ namespace APIAnimeApp.Repository
 		}
 		public ICollection<Page> GetByChapterIdAndPageNumber(int id,int pageNum, int size)
 		{
-			return _context.Pages.Where(p=>p.IdChap==id).Skip(pageNum*size).Take(size).ToList();
+			return _context.Pages.Where(p=>p.IdChap==id).Skip((pageNum-1)*size).Take(size).ToList();
 		}
 	}
 }

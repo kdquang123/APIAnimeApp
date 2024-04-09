@@ -1,16 +1,18 @@
 ﻿using APIAnimeApp.Dto;
 using APIAnimeApp.Interface;
 using APIAnimeApp.Model;
+using APIAnimeApp.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIAnimeApp.Controllers
-{
-	[Route("api/[controller]")]
+{	
+    [Route("api/[controller]")]
 	[ApiController]
 	public class StoryController : ControllerBase
 	{
+		public static int pageSize = 10;
 		private readonly IStoryRepository _storyRepository;
 		private readonly IMapper _mapper;
 		public StoryController(IStoryRepository storyRepository,IMapper mapper)
@@ -75,6 +77,19 @@ namespace APIAnimeApp.Controllers
 			}
 			var story = _mapper.Map<List<StoryDto>>(_storyRepository.getByCategory(categoryId));
 			return Ok(story);
+		}
+
+		[HttpGet("page/{pageNum}")]
+		[ProducesResponseType(200, Type = typeof(IEnumerable<Story>))]
+		[ProducesResponseType(400)]
+		public IActionResult getPageByIdChapterAndPageNum(int pageNum)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			var pages = _mapper.Map<List<StoryDto>>(_storyRepository.getByPageNum(pageNum, pageSize));
+			return Ok(pages);
 		}
 	}
 }

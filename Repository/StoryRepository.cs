@@ -34,5 +34,10 @@ namespace APIAnimeApp.Repository
 		{
 			return _context.Stories.Where(s=>s.IdCategory==categoryId).Include(s=>s.IdCategoryNavigation).ToList();
 		}
+
+		public ICollection<Story> getByPageNum(int pageNum, int pageSize)
+		{
+			return _context.Stories.Skip((pageNum-1)*pageSize).Take(pageSize).ToList();
+		}
 	}
 }

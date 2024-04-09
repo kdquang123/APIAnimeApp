@@ -9,5 +9,6 @@ namespace APIAnimeApp.Interface
 		public bool isExist(int id);
 		public ICollection<Story> getByName(string name);
 		public ICollection<Story> getByCategory(int categoryId);
+		public ICollection<Story> getByPageNum(int pageNum,int pageSize);
 	}
 }

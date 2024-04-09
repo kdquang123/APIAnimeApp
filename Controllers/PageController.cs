@@ -21,7 +21,18 @@ namespace APIAnimeApp.Controllers
 			_mapper = mapper;
 		}
 
-		[HttpGet("{id,pageNum}")]
+		[HttpGet("{id}")]
+		public IActionResult GetAllById(int id) 
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			var pages = _mapper.Map<List<PageDto>>(_pageRepository.GetAllByChapterId(id));
+			return Ok(pages);
+		}
+
+		[HttpGet("{id}/{pageNum}")]
 		[ProducesResponseType(200,Type=typeof(IEnumerable<Page>))]
 		[ProducesResponseType(400)]
 		public IActionResult getPageByIdChapterAndPageNum(int id,int pageNum)
