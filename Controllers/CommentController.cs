@@ -39,7 +39,7 @@ namespace APIAnimeApp.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult createComment([FromBody]CommentDto commentCreate)
         {
@@ -49,17 +49,17 @@ namespace APIAnimeApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			if (!ModelState.IsValid)
+			{
+			    return BadRequest(ModelState);
+			}
 			Comment newComment = _mapper.Map<Comment>(commentCreate);
 			if (!_commentRepository.createComment(newComment))
             {
                 ModelState.AddModelError("", "Some thing went wrong");
                 return StatusCode(500, ModelState);
             }
-            return Ok("Successfully created!");
+            return Ok(commentCreate);
         }
     }
 }
